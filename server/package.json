@@ -1,0 +1,28 @@
+{
+  "name": "login-system-server",
+  "version": "1.0.0",
+  "description": "server is koa, and DB use MySOL+MongoDB",
+  "main": "app.js",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^3.2.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "koa",
+    "login",
+    "mongo",
+    "MySQL"
+  ],
+  "author": "",
+  "license": "ISC"
+}
