@@ -16,8 +16,19 @@ router
         `
     })
     .get('/:id', async (ctx) => {
-        
+        ctx.response.body =
+        `<h1> Get id = ${ctx.params.id} list page</h1>
+        `
     })
-
+    .put('/:id/update', async (ctx) => {
+        ctx.response.body =
+        `<h1> Update id = ${ctx.params.id} list </h1>
+        `
+    })
+    .del('/:id/delete', async (ctx) => {
+        ctx.response.body =
+        `<h1> delete id = ${ctx.params.id} list </h1>
+        `
+    })
 
 module.exports = router
