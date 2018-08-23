@@ -8,6 +8,13 @@ router
     .get('/creat', async (ctx) => {
         ctx.response.body =
         `<h1> Get create list page </h1>
+        <form method="POST" action="/lists/creat">
+            <p>list Name</p>
+            <input name="listName" /><br/>
+            <p>TODO something</p>
+            <input name="todo" /><br/>
+            <button type="submit">submit</button>
+        </form>
         `
     })
     .post('/creat', async (ctx) => {
@@ -18,6 +25,13 @@ router
     .get('/:id', async (ctx) => {
         ctx.response.body =
         `<h1> Get id = ${ctx.params.id} list page</h1>
+        <form method="put" action="/lists/${ctx.params.id}/update">
+            <p>list Name</p>
+            <input name="listName" value="${ctx.params.id}" /><br/>
+            <p>TODO something</p>
+            <input name="todo" value="install"><br/>
+            <button type="submit">submit</button>
+        </form>
         `
     })
     .put('/:id/update', async (ctx) => {
