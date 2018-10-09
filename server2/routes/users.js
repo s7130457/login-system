@@ -1,4 +1,5 @@
 import Router from 'koa-router'
+import {createUser} from '../database/index';
 const router = new Router()
 
 
@@ -23,6 +24,10 @@ router
         }else{
             ctx.response.body = '註冊失敗'
         }
+    })
+    .get('/createUserTable', async(ctx, next) => {
+        createUser().then
+        
     })
 // .get('/:test', async (ctx) => {
 //     ctx.response.body = 'test = ' + ctx.params.test

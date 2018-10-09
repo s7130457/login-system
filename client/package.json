@@ -4,7 +4,7 @@
   "description": "todo-list system using react.js",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build",
+    "start": "webpack-dev-server --devtool eval --progress --colors --content-base build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

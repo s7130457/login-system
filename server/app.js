@@ -1,21 +1,24 @@
-import Koa from 'koa'
+const Koa = require('koa');
+const logger = require('koa-logger');
+const bodyParser= require('koa-bodyparser');
 
-import bodyParser from 'koa-bodyparser'
-import logger from 'koa-logger'
-import router from './routes/index'
-
-const app = new Koa()
+const router = require('./src/routes/index');
 
 
-//Middleware
-
-app.use(bodyParser())
-    .use(logger())
-
-app.use(router.routes())
-    .use(router.allowedMethods())
+const app = new Koa();
 
 
-app.listen(3001)
-console.log('Connect server!')
-module.exports = app
+//在其他Midderware之前加入logger
+app.use(logger());
+app.use(bodyParser());
+
+// app.use(async function(ctx) {
+//      ctx.body = 'Hello World!';
+// });
+router(app);//???
+
+module.exports = app;
+
+app.listen(3001, () => {
+    console.log('Server is running at http://localhost:3001');
+});
