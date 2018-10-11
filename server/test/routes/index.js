@@ -10,8 +10,26 @@ const expect = chai.expect;
 describe('Home API', () => {
 
     describe('/GET ', () => {
-        it('Home', (done) => {
+        it('home', (done) => {
             api.get('/')
+                .expect(200)
+                .end((err, res) => {
+                    if(err) {
+                        console.log('err');
+                        console.log(err);
+                        
+                    }
+                    console.log(res.body);
+                    
+                    
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.page).to.be.equal('<h1> Home Page.</h1>');
+                    done();
+                });
+        });
+
+        it('login', (done) => {
+            api.get('/login')
                 .expect(200)
                 .end((err, res) => {
                     if(err) {
