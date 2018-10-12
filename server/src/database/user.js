@@ -10,12 +10,26 @@ module.exports = {
         let result;
         try {
             result = await knex('user')
-                .select('account','password')
+                .select()
                 .where('account',user.account);
         } catch (error) {
             throw new Error(error);
         }
         return result;
+    },
+    updateLoginTime: async (userId) => {
+        // let loginTime;
+        console.log('time='+new Date().toLocaleString());
+        
+        try {
+            await knex('user')
+                .where('userId', userId)
+                .update({
+                    loginTime: new Date().toLocaleString()
+                });
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
 };

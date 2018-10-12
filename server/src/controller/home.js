@@ -29,6 +29,7 @@ module.exports = {
                 result.msg = 'Error password.';
             } else {
                 result.msg = 'Success Login.';
+                await User.updateLoginTime(user.userId);
                 result.data = user;
             }
         }
