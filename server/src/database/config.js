@@ -6,6 +6,7 @@ const mysql = {
         user: 'jeni',
         password: 'jeni',
         database: 'todo-list-system',
+        dateStrings: true //將時間轉成字串
     }
 
 };

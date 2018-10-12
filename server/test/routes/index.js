@@ -44,6 +44,7 @@ describe('Home API', () => {
                     expect(res.body.msg).to.be.equal('Success Login.');
                     expect(res.body.data.account).to.be.equal(userConfig.account);
                     expect(res.body.data.password).to.be.equal(userConfig.password);
+                    expect(res.body.data.loginTime).to.be.equal(new Date().toLocaleString());
                     done();
                 });
         });
