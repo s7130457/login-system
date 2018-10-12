@@ -7,7 +7,8 @@ const router = new Router({
 });
 
 router.get('/', HomeController.home);
-router.get('/login', HomeController.login);
+router.get('login', HomeController.getLogin);
+router.post('login', HomeController.postLogin);
     
 
 

@@ -12,6 +12,9 @@ module.exports = {
         
     },
     info: async(ctx, next) => {
-        ctx.body = '<h1> User get info Page.</h1>';
+        ctx.body = {
+            'page': '<h1> User get info Page.</h1>',
+            'b': 'rrrrr'
+        };
     }
 };
