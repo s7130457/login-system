@@ -6,13 +6,7 @@ const mysql = {
         user: 'jeni',
         password: 'jeni',
         database: 'todo-list-system',
-        insecureAuth : true
     }
-    // ,
-    // pool: {
-    //     min: 0,
-    //     max: 5
-    // }
 
 };
 
