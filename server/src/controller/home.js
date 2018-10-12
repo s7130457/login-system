@@ -3,7 +3,6 @@ const User = require('../database/user');
 module.exports = {
 
     home: async ctx => {
-        // ctx.body = '<h1> Home Page.</h1>';
         ctx.body = {
             'page': '<h1> Home Page.</h1>',
             'b': 'rrrrr'
@@ -16,12 +15,24 @@ module.exports = {
         };
     },
     postLogin: async ctx => {
-        console.log('ctx.request');
-        console.log(ctx.request.body);
-        let user = ctx.request.body;
-        let result =await User.searchUser(user);
-        ctx.body = {
-            data: result
+        let result = {
+            msg: '',
+            data: null
         };
+        let request = ctx.request.body;
+        let user =await User.findUser(request);
+        if(user == 0) {
+            result.msg = 'Does not find account.';
+        } else {
+            user = JSON.parse(JSON.stringify(user[0]));
+            if(user.password !== request.password) {
+                result.msg = 'Error password.';
+            } else {
+                result.msg = 'Success Login.';
+                result.data = user;
+            }
+        }
+        ctx.body = result;
+
     }
 };
