@@ -30,7 +30,7 @@ module.exports = {
             } else {
                 result.msg = 'Success Login.';
                 user = await User.getUserInfo(user.userId);
-                result.data = user;
+                result.data = user[0];
             }
         }
         ctx.body = result;
