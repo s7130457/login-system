@@ -56,9 +56,9 @@ describe('Home API', () => {
                     password: 'errorPassword'
                 })
                 .end((err, res) => {
-                    // expect(res.body.statusCode).to.be.equal(401);
-                    // expect(res.body.error).to.be.equal(true);
-                    expect(res.body.msg).to.be.equal('Does not find account.');
+                    expect(res.body.statusCode).to.be.equal(400);
+                    expect(res.body.error).to.be.equal(true);
+                    expect(res.body.msg).to.be.equal('Does not find user.');
                     expect(res.body.data).to.be.equal(null);
                     done();
                 });
