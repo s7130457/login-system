@@ -39,12 +39,13 @@ describe('Home API', () => {
                     account: 'account',
                     password: 'jeni_password'
                 })
-                .expect(200)
                 .end((err, res) => {
-                    expect(res.body.msg).to.be.equal('Success Login.');
+                    expect(res.status).to.be.equal(200);
+                    expect(res.body.error).to.be.equal(false);
                     expect(res.body.data.account).to.be.equal(userConfig.account);
                     expect(res.body.data.password).to.be.equal(userConfig.password);
                     expect(res.body.data.loginTime).to.be.equal(new Date().toLocaleString());
+                    expect(res.body.msg).to.be.equal('Success Login.');
                     done();
                 });
         });
@@ -54,8 +55,9 @@ describe('Home API', () => {
                     account: 'errorAccount',
                     password: 'errorPassword'
                 })
-                .expect(200)
                 .end((err, res) => {
+                    // expect(res.body.statusCode).to.be.equal(401);
+                    // expect(res.body.error).to.be.equal(true);
                     expect(res.body.msg).to.be.equal('Does not find account.');
                     expect(res.body.data).to.be.equal(null);
                     done();
@@ -67,10 +69,11 @@ describe('Home API', () => {
                     account: 'account',
                     password: 'errorPassword'
                 })
-                .expect(200)
                 .end((err, res) => {
-                    expect(res.body.msg).to.be.equal('Error password.');
+                    expect(res.status).to.be.equal(401);
+                    expect(res.body.error).to.be.equal(true);
                     expect(res.body.data).to.be.equal(null);
+                    expect(res.body.msg).to.be.equal('Error password.');
                     done();
                 });
         });
