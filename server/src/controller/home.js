@@ -21,7 +21,7 @@ module.exports = {
         };
     },
     postLogin: async ctx => {
-        let result;
+        let result, msg;
         let request = ctx.request.body;
         let user =await User.findUser(request);
         if(user == 0) {
@@ -29,7 +29,8 @@ module.exports = {
         } else {
             user = JSON.parse(JSON.stringify(user[0]));
             if(user.password !== request.password) {
-                result.msg = 'Error password.';
+                msg = 'Error password.';
+                result = resp.unAuthorized(msg);
             } else {
                 user.loginTime = await User.updateLoginTime(user.userId);
                 let userToken = {
@@ -37,11 +38,12 @@ module.exports = {
                     id: user.id
                 };
                 user.token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
-                let msg = 'Success Login.';
+                msg = 'Success Login.';
                 result = resp.success(user, msg);
+                
             }
         }
         ctx.body = result;
-
+        ctx.status = result.statusCode;
     }
 };
