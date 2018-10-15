@@ -4,17 +4,6 @@ const knex = require('knex')({
     client: config.client,
     connection: config.connection    
 });
-const updateLoginTime =  async (userId) => {
-    try {
-        await knex('user')
-            .where('userId', userId)
-            .update({
-                loginTime: new Date().toLocaleString()
-            });
-    } catch (error) {
-        throw new Error(error);
-    }
-};
 
 module.exports = {
     findUser: async (user) => {
@@ -28,17 +17,18 @@ module.exports = {
         }
         return result;
     },
-    getUserInfo: async (userId) => {
-        updateLoginTime(userId);
-        let user;
+    updateLoginTime:  async (userId) => {
         try {
-            user = await knex('user')
-                .where('userId', userId);
+            let time = new Date().toLocaleString();
+            await knex('user')
+                .where('userId', userId)
+                .update({
+                    loginTime: time
+                });
+            return time;
         } catch (error) {
             throw new Error(error);
         }
-        return user;
-    },
-    
+    }
 
 };
