@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const User = require('../database/user');
+const UserDB = require('../database/user');
 const secret = require('../config/auth.json');
 const resp = require('../config/format');
 
@@ -21,28 +21,32 @@ module.exports = {
         };
     },
     postLogin: async ctx => {
-        let result, msg;
+        let result, msg, user;
         let request = ctx.request.body;
-        let user =await User.findUser(request);
-        if(user == 0) {
-            msg = 'Does not find user.';
-            result = resp.badRequest(msg);
-        } else {
-            user = JSON.parse(JSON.stringify(user[0]));
-            if(user.password !== request.password) {
-                msg = 'Error password.';
-                result = resp.unAuthorized(msg);
+        try {
+            user = await UserDB.findUser(request);
+            if(user == 0) {
+                msg = 'Does not find user.';
+                result = resp.badRequest(msg);
             } else {
-                user.loginTime = await User.updateLoginTime(user.userId);
-                let userToken = {
-                    name: user.userName,
-                    id: user.id
-                };
-                user.token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
-                msg = 'Success Login.';
-                result = resp.success(user, msg);
-                
+                user = JSON.parse(JSON.stringify(user[0]));
+                if(user.password !== request.password) {
+                    msg = 'Error password.';
+                    result = resp.unAuthorized(msg);
+                } else {
+                    user.loginTime = await UserDB.updateLoginTime(user.userId);
+                    let userToken = {
+                        name: user.userName,
+                        id: user.id
+                    };
+                    user.token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
+                    msg = 'Success Login.';
+                    result = resp.success(user, msg);
+                }
             }
+        } catch (error) {
+            msg = error.message;
+            result = resp.internalError(msg);
         }
         ctx.body = result;
         ctx.status = result.statusCode;

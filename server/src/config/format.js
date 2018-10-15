@@ -26,5 +26,14 @@ module.exports = {
             msg: msg || 'Bad Request'
         };
         return resObj;
+    },
+    internalError: (msg) => {
+        resObj = {
+            statusCode: 500,
+            error: true,
+            data: null,
+            msg: msg || 'Internal Server Error'
+        };
+        return resObj;
     }
 };

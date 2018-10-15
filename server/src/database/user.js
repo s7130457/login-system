@@ -1,4 +1,5 @@
 const config = require('./config');
+const resp = require('../config/format');
 
 const knex = require('knex')({
     client: config.client,
@@ -7,13 +8,14 @@ const knex = require('knex')({
 
 module.exports = {
     findUser: async (user) => {
-        let result;
+        let result, msg;
         try {
             result = await knex('user')
                 .select()
                 .where('account',user.account);
         } catch (error) {
-            throw new Error(error);
+            throw new Error('DB find user happen error.');
+           
         }
         return result;
     },
@@ -27,7 +29,7 @@ module.exports = {
                 });
             return time;
         } catch (error) {
-            throw new Error(error);
+            throw new Error('DB update user login time happen error.');
         }
     }
 
