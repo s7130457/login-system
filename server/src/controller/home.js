@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../database/user');
 const secret = require('../config/auth.json');
+const resp = require('../config/format');
 
 
 
@@ -20,11 +21,7 @@ module.exports = {
         };
     },
     postLogin: async ctx => {
-        let result = {
-            msg: '',
-            data: null,
-            token: null
-        };
+        let result;
         let request = ctx.request.body;
         let user =await User.findUser(request);
         if(user == 0) {
@@ -39,11 +36,9 @@ module.exports = {
                     name: user.userName,
                     id: user.id
                 };
-                const token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
-                result.msg = 'Success Login.';
-                result.data = user;
-                result.token = token;
-
+                user.token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
+                let msg = 'Success Login.';
+                result = resp.success(user, msg);
             }
         }
         ctx.body = result;

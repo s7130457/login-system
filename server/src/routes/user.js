@@ -9,7 +9,7 @@ const router = new Router({
 router.get('/', UserController.home);
 router.get('/info', UserController.info);
 
-    
+
 
 
 module.exports = router;
