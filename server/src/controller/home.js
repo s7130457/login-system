@@ -1,4 +1,9 @@
+const jwt = require('jsonwebtoken');
+
 const User = require('../database/user');
+const secret = require('../config/auth.json');
+
+
 
 module.exports = {
 
@@ -17,7 +22,8 @@ module.exports = {
     postLogin: async ctx => {
         let result = {
             msg: '',
-            data: null
+            data: null,
+            token: null
         };
         let request = ctx.request.body;
         let user =await User.findUser(request);
@@ -28,9 +34,16 @@ module.exports = {
             if(user.password !== request.password) {
                 result.msg = 'Error password.';
             } else {
-                result.msg = 'Success Login.';
                 user.loginTime = await User.updateLoginTime(user.userId);
+                let userToken = {
+                    name: user.userName,
+                    id: user.id
+                };
+                const token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
+                result.msg = 'Success Login.';
                 result.data = user;
+                result.token = token;
+
             }
         }
         ctx.body = result;
