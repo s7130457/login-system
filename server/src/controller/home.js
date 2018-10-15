@@ -25,7 +25,8 @@ module.exports = {
         let request = ctx.request.body;
         let user =await User.findUser(request);
         if(user == 0) {
-            result.msg = 'Does not find account.';
+            msg = 'Does not find user.';
+            result = resp.badRequest(msg);
         } else {
             user = JSON.parse(JSON.stringify(user[0]));
             if(user.password !== request.password) {

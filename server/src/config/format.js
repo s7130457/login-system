@@ -17,5 +17,14 @@ module.exports = {
             msg: msg || 'Unauthorized'
         };
         return resObj;
+    },
+    badRequest: (msg) => {
+        resObj = {
+            statusCode: 400,
+            error: true,
+            data: null,
+            msg: msg || 'Bad Request'
+        };
+        return resObj;
     }
 };
