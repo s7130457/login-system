@@ -8,7 +8,7 @@ const knex = require('knex')({
 
 module.exports = {
     findUser: async (data) => {
-        let result, msg;
+        let result;
         try {
             result = await knex('user')
                 .select()
@@ -17,6 +17,17 @@ module.exports = {
             throw error;
            
         }
+        return result;
+    },
+    createUser: async (data) => {
+        let result;
+        result = await knex('user')
+            .insert({
+                account: data.account,
+                password: data.password,
+                userName: data.userName
+            });
+       
         return result;
     }
 };

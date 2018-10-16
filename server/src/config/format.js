@@ -4,7 +4,7 @@ module.exports = {
         resObj = {
             statusCode: 200,
             error: false,
-            data: data,
+            data: data || 'success',
             msg: msg || 'OK'
         };
         return resObj;

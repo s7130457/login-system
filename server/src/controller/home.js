@@ -14,6 +14,26 @@ module.exports = {
             'b': 'rrrrr'
         };
     },
+    getRegister: async ctx => {
+        ctx.body = {
+            'page': '<h1> Register Page.</h1>',
+        };
+    },
+    postRegister: async ctx => {
+        let result, user, msg;
+        let request = ctx.request.body;
+        user = await UserDB.findUser(request);
+        if(user.length === 0) {
+            user = await UserDB.createUser(request);
+            msg = 'Success Register.';
+            result = resp.success(null, msg);
+        } else {
+            msg = 'User already register.';
+            result = resp.unAuthorized(msg);
+        }
+        ctx.body = result;
+        ctx.status = result.statusCode;
+    },
     getLogin: async ctx => {
         ctx.body = {
             'page': '<h1> Login Page.</h1>',
@@ -34,7 +54,6 @@ module.exports = {
                 msg = 'Error password.';
                 result = resp.unAuthorized(msg);
             } else {
-                // user.loginTime = await UserDB.updateLoginTime(user.userId);
                 let userToken = {
                     name: user.userName,
                     id: user.id
