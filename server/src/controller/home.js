@@ -34,7 +34,7 @@ module.exports = {
                 msg = 'Error password.';
                 result = resp.unAuthorized(msg);
             } else {
-                user.loginTime = await UserDB.updateLoginTime(user.userId);
+                // user.loginTime = await UserDB.updateLoginTime(user.userId);
                 let userToken = {
                     name: user.userName,
                     id: user.id
@@ -46,6 +46,10 @@ module.exports = {
         }
         ctx.body = result;
         ctx.status = result.statusCode;
-        
+    },
+    logout: async ctx => {
+        ctx.body = {
+            'page': '<h1> Logout Page.</h1>'
+        };
     }
 };

@@ -18,20 +18,5 @@ module.exports = {
            
         }
         return result;
-    },
-    updateLoginTime:  async (userId) => {
-        try {
-            let time = new Date().toLocaleString();
-            await knex('user')
-                .where('userId', userId)
-                .update({
-                    loginTime: time
-                });
-                
-            return time;
-        } catch (error) {
-            throw new Error('DB update user login time happen error.');
-        }
     }
-
 };

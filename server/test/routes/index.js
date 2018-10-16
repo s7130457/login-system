@@ -4,29 +4,37 @@ const api = supertest('http://localhost:3001');
 const expect = chai.expect;
 
 
-describe('Home API', () => {
+describe.only('Home API', () => {
 
-    describe('Home /GET page', () => {
-        it('Home', (done) => {
-            api.get('/')
-                .expect(200)
-                .end((err, res) => {
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.page).to.be.equal('<h1> Home Page.</h1>');
-                    done();
-                });
-        });
-        it('Login', (done) => {
-            api.get('/login')
-                .expect(200)
-                .end((err, res) => {
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.page).to.be.equal('<h1> Login Page.</h1>');
-                    done();
-                });
-        });
-
+    it('Home /GET', (done) => {
+        api.get('/')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.page).to.be.equal('<h1> Home Page.</h1>');
+                done();
+            });
     });
+    it('Login /GET', (done) => {
+        api.get('/login')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.page).to.be.equal('<h1> Login Page.</h1>');
+                done();
+            });
+    });
+    it('Logout /POST', (done) => {
+        api.post('/logout')
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body.page).to.be.equal('<h1> Logout Page.</h1>');
+                done();
+            });
+    });
+
+
 
     describe('Login /POST', () => {
         const userConfig = {
@@ -44,7 +52,6 @@ describe('Home API', () => {
                     expect(res.body.error).to.be.equal(false);
                     expect(res.body.data.account).to.be.equal(userConfig.account);
                     expect(res.body.data.password).to.be.equal(userConfig.password);
-                    expect(res.body.data.loginTime).to.be.equal(new Date().toLocaleString());
                     expect(res.body.msg).to.be.equal('Success Login.');
                     done();
                 });

@@ -9,6 +9,7 @@ const router = new Router({
 router.get('/', HomeController.home);
 router.get('login', HomeController.getLogin);
 router.post('login', HomeController.postLogin);
+router.post('logout', HomeController.logout);
     
 
 
