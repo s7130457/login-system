@@ -7,14 +7,14 @@ const knex = require('knex')({
 });
 
 module.exports = {
-    findUser: async (user) => {
+    findUser: async (data) => {
         let result, msg;
         try {
             result = await knex('user')
                 .select()
-                .where('account',user.account);
+                .where('account',data.account);
         } catch (error) {
-            throw new Error('DB find user happen error.');
+            throw error;
            
         }
         return result;
@@ -27,6 +27,7 @@ module.exports = {
                 .update({
                     loginTime: time
                 });
+                
             return time;
         } catch (error) {
             throw new Error('DB update user login time happen error.');
