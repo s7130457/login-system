@@ -9,14 +9,9 @@ const knex = require('knex')({
 module.exports = {
     findUser: async (data) => {
         let result;
-        try {
-            result = await knex('user')
-                .select()
-                .where('account',data.account);
-        } catch (error) {
-            throw error;
-           
-        }
+        result = await knex('user')
+            .select()
+            .where('account',data.account);
         return result;
     },
     createUser: async (data) => {
