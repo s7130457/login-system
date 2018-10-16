@@ -19,7 +19,7 @@ app.use(bodyParser());
 
 app
     .use(jwtKoa({secert: secert.sign}).unless({
-        path:[/\/register/, /\/login/, /\/logout/]
+        path:['/', '/register', '/login', '/logout']
     }));
 
 routes(app);
