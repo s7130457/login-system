@@ -4,8 +4,9 @@
   "description": "server is koa, and DB use MySOL+MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "eslint app.js && node ./app.js",
-    "test": "mocha --recursive"
+    "dev": "set NODE_ENV=development && eslint app.js && node ./app.js",
+    "start": "set NODE_ENV=production && eslint app.js && node ./app.js",
+    "test": "set NODE_ENV=test && mocha --recursive"
   },
   "keywords": [
     "koa",
