@@ -1,5 +1,4 @@
 const config = require('./config');
-const resp = require('../config/format');
 
 const knex = require('knex')({
     client: config.client,
