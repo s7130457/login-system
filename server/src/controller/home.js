@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt-nodejs');
 
 const UserDB = require('../database/user');
 const secret = require('../config/auth.json');
@@ -22,6 +23,14 @@ module.exports = {
     postRegister: async ctx => {
         let result, user, msg;
         let request = ctx.request.body;
+        //生成salt的迭代次数
+        const saltRounds = 10;
+        //随机生成salt
+        const salt = bcrypt.genSaltSync(saltRounds);
+        //获取hash值
+        var hash = bcrypt.hashSync(request.password, salt);
+        //把hash值赋值给password变量
+        request.password = hash;
         user = await UserDB.findUser(request);
         if(user.length === 0) {
             user = await UserDB.createUser(request);
@@ -49,8 +58,8 @@ module.exports = {
             msg = 'Does not find user.';
             result = resp.badRequest(msg);
         } else {
-            user = JSON.parse(JSON.stringify(user[0]));
-            if(user.password !== request.password) {
+            user = user[0];
+            if(user[0].password !== request.password) {
                 msg = 'Error password.';
                 result = resp.unAuthorized(msg);
             } else {
@@ -60,7 +69,7 @@ module.exports = {
                 };
                 user.token = jwt.sign(userToken, secret.sign, {expiresIn: '1h'});
                 msg = 'Success Login.';
-                result = resp.success(user, msg);
+                result = resp.success(user[0], msg);
             }
         }
         ctx.body = result;
